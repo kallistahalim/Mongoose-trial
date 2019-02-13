@@ -1,0 +1,17 @@
+<div class="home-article">
+    {{#each articles}}
+        <div class="individual-article">
+            <div class="article-img-container">
+                <img id="img-{{@index}}" src="{{this.images}}" alt="{{this.name}}" class="article-img">
+            </div>
+
+            <div class="article-text-container">
+                <h2 id="title-{{@index}}" class="article-heading">{{this.name}}</h2>
+                <a id="link-{{@index}}" class="article-link" href="{{this.link}}">{{this.link}}</a>
+                <h2 id="title-{{@index}}" class="article-heading">{{this.summary}}</h2>
+            </div>
+
+            <button data-id={{@index}} class="save-article">Save</button>
+        </div>
+    {{/each}}
+</div>

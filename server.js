@@ -1,9 +1,10 @@
 // Dependencies
 const express = require("express");
 const mongojs = require("mongojs");
+const logger = require("morgan");
+const mongoose = require('mongoose');
+
 // Require request and cheerio. This makes the scraping possible
-const request = require("request");
-const cheerio = require("cheerio");
 
 // Initialize Express
 const app = express();
@@ -25,8 +26,18 @@ app.use(express.json());
 
 const exphbs = require("express-handlebars");
 
-app.engine("handlebars", exphbs({ defaultLayout: "main" }));
+app.engine("handlebars", exphbs({ 
+  defaultLayout: "main"
+}));
 app.set("view engine", "handlebars");
+
+// If deployed, use the deployed database. Otherwise use the local mongoHeadlines database
+const MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/mongoHeadlines";
+
+// Set mongoose to leverage built in JavaScript ES6 Promises
+// Connect to the Mongo DB
+mongoose.Promise = Promise;
+mongoose.connect(MONGODB_URI, { useNewUrlParser: true });
 
 const routes = require("./routes/CRUD");
 app.use(routes);
